@@ -14,12 +14,21 @@ def draw_letters
   # generate random index
   index = Random.rand(min..max)
 
-  # check if index is in indices_used array , if true generate new random index
-  while indices_used.include?(index)
-    index = Random.rand(min..max)
+  # get 10 unique indices, and saved them in indices used
+  10.times do
+    # check if index is in indices_used array , if true generate new random index
+    while indices_used.include?(index)
+      index = Random.rand(min..max)
+    end
+    # if not is not in indices used, add it there
+    indices_used << index
   end
-  # if not is not in indices used, add it there
-  indices_used << index
+
+  ten_letters = indices_used.map do |index|
+    letters[index]
+  end
+
+  return ten_letters
 end
 
-draw_letters
+puts draw_letters
