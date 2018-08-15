@@ -58,3 +58,32 @@ def uses_available_letters? (input, letters_in_hand)
   end
   final_results.all? { |value| value == true}
 end
+
+def score_word(word)
+  score = 0
+  group1 = %w(A E I O U L N R S T)
+  group2 = %w(D G)
+  group3 = %w(B C M P)
+  group4 = %w(F H V W Y)
+  group5 = %w(J X)
+  group6 = %w(Q Z)
+  word.upcase.each_char do |letter|
+    if group1.include?(letter)
+      score += 1
+    elsif group2.include?(letter)
+      score += 2
+    elsif group3.include?(letter)
+      score += 3
+    elsif group4.include?(letter)
+      score += 4
+    elsif group5.include?(letter)
+      score += 8
+    elsif group6.include?(letter)
+      score += 10
+    end
+  end
+  if word.length >= 7 && word.length <= 10
+    score += 8
+  end
+  return score
+end
