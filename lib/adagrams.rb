@@ -87,3 +87,36 @@ def score_word(word)
   end
   return score
 end
+
+def highest_score_from_word(words)
+  # create hash of words and score
+  data = {}
+  winner = ""
+  words.each do |word|
+    data[word] = score_word(word)
+  end
+
+  # get max value in hash
+  max = data.max_by {|k, v| v}[1]
+
+  # select key - value pair/s
+  ties_words = data.select{ |k, v| v == max}
+
+  if ties_words.length == 1
+    winner = ties_words[0]
+  elsif ties_words.length > 1
+    shortest_length = 0
+    ties_words.each do |word|
+      if word == 10
+        winner = word
+      else
+        word.length > shortest_length
+        shortest_length = word.length
+        winner = word
+      end
+    end
+  end
+  winner
+  score = data.select{ |k, v| k == winner}.values
+  return {winner => score}
+end
