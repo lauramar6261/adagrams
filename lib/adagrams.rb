@@ -1,3 +1,5 @@
+require 'csv'
+
 def draw_letters
 
   # all letters
@@ -33,7 +35,7 @@ def draw_letters
   return ten_letters
 end
 
-def uses_available_letters? (input, letters_in_hand)
+def uses_available_letters?(input, letters_in_hand)
   result = []
   final_results = []
   input.each_char do |letter|
@@ -88,10 +90,12 @@ def score_word(word)
   return score
 end
 
-def highest_score_from_word(words)
+def highest_score_from(words)
   # create hash of words and score
   data = {}
   winner = ""
+  # create hash of words and scores
+  # return key value pair, key = word, and value = score, add it to hash
   words.each do |word|
     data[word] = score_word(word)
   end
@@ -100,23 +104,37 @@ def highest_score_from_word(words)
   max = data.max_by {|k, v| v}[1]
 
   # select key - value pair/s
+  # retutn array of words
   ties_words = data.select{ |k, v| v == max}
 
-  if ties_words.length == 1
+  if ties_words.length == 1 # only one word in ties_words array
     winner = ties_words[0]
-  elsif ties_words.length > 1
+  elsif ties_words.length > 1 # if there is more than one word
     shortest_length = 0
+    # loop through every word that are in the ties array
     ties_words.each do |word|
       if word == 10
         winner = word
-      else
+      else # identify the shortest word
         word.length > shortest_length
         shortest_length = word.length
         winner = word
       end
     end
+
   end
   winner
   score = data.select{ |k, v| k == winner}.values
   return {winner => score}
+end
+
+
+def is_in_english_dict?(input)  #input is a string
+  CSV.open("assets/dictionary-english.csv", 'r') do |line|
+    if line.to_s == (input)
+      return true
+    else
+      return false
+    end
+  end
 end
