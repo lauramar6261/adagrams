@@ -189,5 +189,6 @@ describe 'Adagrams' do
       expect(is_in_english_dict?(word)).must_equal true
 
     end
+    
   end
 end
