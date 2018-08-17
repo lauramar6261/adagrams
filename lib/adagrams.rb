@@ -125,11 +125,15 @@ end
 
 
 def is_in_english_dict?(input)  #input is a string
-  CSV.open("assets/dictionary-english.csv", 'r') do |line|
-    if line.to_s == (input)
-      return true
+  answer = ""
+  CSV.open("assets/dictionary-english.csv", 'r').each do |line|
+    if line[0] == input
+      answer = true
     else
-      return false
+      answer = false
     end
   end
+  return answer
 end
+
+is_in_english_dict?("zwitterion")
