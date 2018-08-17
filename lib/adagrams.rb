@@ -99,33 +99,36 @@ def highest_score_from(words)
   words.each do |word|
     data[word] = score_word(word)
   end
-
+  #binding.pry
   # get max value in hash
   max = data.max_by {|k, v| v}[1]
-
+  #binding.pry
   # select key - value pair/s
   # retutn array of words
-  ties_words = data.select{ |k, v| v == max}
-
+  ties_words = data.select{ |k, v| v == max}.keys
+  #binding.pry
   if ties_words.length == 1 # only one word in ties_words array
     winner = ties_words[0]
+    #binding.pry
   elsif ties_words.length > 1 # if there is more than one word
     shortest_length = 0
     # loop through every word that are in the ties array
     ties_words.each do |word|
-      if word == 10
+      if word.length == 10
         winner = word
+        #binding.pry
       else # identify the shortest word
         word.length > shortest_length
         shortest_length = word.length
         winner = word
+        #binding.pry
       end
     end
-
   end
-  winner
-  score = data.select{ |k, v| k == winner}.values
-  return {winner => score}
+  score = data.select{ |k, v| k == winner}.values[0]
+  #binding.pry
+  return {:word => winner, :score => score}
+  #binding.pry
 end
 
 
