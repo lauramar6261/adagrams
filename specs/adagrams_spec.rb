@@ -149,7 +149,7 @@ describe 'Adagrams' do
       expect(score_word(words.first)).must_equal 18
       expect(score_word(words.last)).must_equal 18
 
-      best_word = highest_score_from words
+      best_word = highest_score_from(words)
 
       expect(best_word[:word]).must_equal 'AAAAAAAAAA'
       expect(best_word[:score]).must_equal 18
@@ -163,10 +163,31 @@ describe 'Adagrams' do
       expect(score_word(words.first)).must_equal 18
       expect(score_word(words.last)).must_equal 18
 
-      best_word = highest_score_from words
+      best_word = highest_score_from(words)
 
       expect(best_word[:word]).must_equal words.first
       expect(best_word[:score]).must_equal 18
+    end
+  end
+
+  describe 'is_in_english_dict?' do
+    it 'looks in the dictionary in csv file to verify input is word' do
+      #Assign
+      word = ['sdfsdfsdfsd']
+
+      #Act #Assert
+      expect(is_in_english_dict?(word)).must_equal false
+    end
+
+    it 'reads the entire csv file by using the last word' do
+      #Assign
+      word = "zwitterion"
+
+      debug = is_in_english_dict?(word)
+      #binding.pry
+      #Act #Assert
+      expect(is_in_english_dict?(word)).must_equal true
+
     end
   end
 end
