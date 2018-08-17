@@ -1,4 +1,5 @@
 require 'csv'
+require 'pry'
 
 def draw_letters
 
@@ -27,7 +28,6 @@ def draw_letters
     # if not is not in indices used, add it there
     indices_used << index
   end
-
   ten_letters = indices_used.map do |index|
     letters[index]
   end
@@ -58,7 +58,8 @@ def uses_available_letters?(input, letters_in_hand)
       final_results << false
     end
   end
-  final_results.all? { |value| value == true}
+  # returns true if all values in results are true
+  return final_results.all? { |value| value == true}
 end
 
 def score_word(word)
@@ -99,36 +100,27 @@ def highest_score_from(words)
   words.each do |word|
     data[word] = score_word(word)
   end
-  #binding.pry
   # get max value in hash
   max = data.max_by {|k, v| v}[1]
-  #binding.pry
   # select key - value pair/s
-  # retutn array of words
+  # returns array of words
   ties_words = data.select{ |k, v| v == max}.keys
-  #binding.pry
-  if ties_words.length == 1 # only one word in ties_words array
+  if ties_words.length == 1 # no ties
     winner = ties_words[0]
-    #binding.pry
-  elsif ties_words.length > 1 # if there is more than one word
-    shortest_length = 0
-    # loop through every word that are in the ties array
+  else # ties
     ties_words.each do |word|
-      if word.length == 10
+      if word.length == 10 # select word length 10 and return it as a winner
         winner = word
-        #binding.pry
-      else # identify the shortest word
-        word.length > shortest_length
-        shortest_length = word.length
-        winner = word
-        #binding.pry
+        # finds winner in data, and return it's value for the score
+        score = data.select{ |k, v| k == winner}.values[0]
+        return {:word => winner, :score => score}
+      else # select shortest word and return it as a winner
+        winner = ties_words.sort_by {|x| x.length}.first
       end
     end
   end
   score = data.select{ |k, v| k == winner}.values[0]
-  #binding.pry
   return {:word => winner, :score => score}
-  #binding.pry
 end
 
 
