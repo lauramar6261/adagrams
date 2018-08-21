@@ -49,18 +49,11 @@ def uses_available_letters? (input, letters_in_hand)
     print letter
     # check if letter exists in letters_in_hand
     if letters_in_hand.include?(letter)
-      # if it exits, delete
-      letters_in_hand.delete(letter)
+      return true
     else
       # user used a letter that does not exists
       return puts "false"
     end
-  end
-  # check if all letters in letters_in_hand were used
-  if letters_in_hand.empty?
-    return puts "true"
-  else
-    return puts "false"
   end
 end
 
